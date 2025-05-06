@@ -1,0 +1,7 @@
+package com.domulink.exception;
+
+public class CloudinaryException extends RuntimeException{
+    public CloudinaryException(String message, String cause){
+        super(message, cause);
+    }
+}

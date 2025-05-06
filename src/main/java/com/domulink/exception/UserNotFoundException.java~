@@ -1,0 +1,11 @@
+package com.domulink.exception;
+
+<<<<<<<<<<<<<<  ✨ Codeium Command 🌟 >>>>>>>>>>>>>>>>
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(String message) {
+        super(message);
+    }
+public class UserNotFoundException {
+}
+
+<<<<<<<  7dd31a3d-2677-4128-b659-2cb0437f0636  >>>>>>>

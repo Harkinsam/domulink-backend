@@ -1,0 +1,2 @@
+package com.domulink.enums;public enum ElectricityFeeInclusion {
+}
