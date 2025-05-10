@@ -16,6 +16,9 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
 
+//    public EmailServiceImpl(JavaMailSender mailSender) {
+//        this.mailSender = mailSender;
+//    }
 
 
     public void sendOtpEmail(String toEmail, String otp) {

@@ -52,6 +52,7 @@ public class SecurityConfig {
                                 .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
                                 .requestMatchers("/api/properties/**").authenticated()
                                 .requestMatchers("/api/v1/pay/**").authenticated()
+                                .requestMatchers("/api/v1/rental/**").authenticated()
 //                                .requestMatchers("/api/property/**").hasAnyAuthority("ADMIN", "LANDLORD")
                                 .anyRequest().authenticated()
                 ).userDetailsService(userDetailsServiceImp)

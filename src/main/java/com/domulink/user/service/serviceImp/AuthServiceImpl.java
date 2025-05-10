@@ -94,6 +94,7 @@ public class AuthServiceImpl implements AuthService {
 
         redisService.deleteSignupData(email);
         log.info("Signup completed successfully for email: {}", email);
+        emailService.sendWelcomeEmail(user.getEmail());
         return new SignUpResponse(email, "Signup completed successfully for email: " + email);
 
     }

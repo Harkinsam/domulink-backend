@@ -1,9 +1,12 @@
 package com.domulink.payment.controller;
 
-import com.domulink.dto.request.PayStackPaymentDTO;
+import com.domulink.dto.request.NewRentalPaymentRequest;
 import com.domulink.dto.request.PayStackWebhookDTO;
+import com.domulink.dto.request.RenewRentalPaymentRequest;
 import com.domulink.dto.response.PayStackResponse;
+import com.domulink.dto.response.TransactionResponse;
 import com.domulink.payment.service.PaymentService;
+import com.domulink.payment.service.TransactionService;
 import com.domulink.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/pay")
 @RequiredArgsConstructor
@@ -20,16 +25,35 @@ import org.springframework.web.bind.annotation.*;
 public class paymentController {
 
     private final PaymentService paymentService;
+    private final TransactionService transactionService;
 
 
-    @PostMapping("/paystack")
-    public ResponseEntity<PayStackResponse> payForRent(@RequestBody PayStackPaymentDTO request) {
+    @PostMapping("/new")
+    public ResponseEntity<PayStackResponse> payForRent( @Valid @RequestBody NewRentalPaymentRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String userEmail = customUserDetails.getUsername();
 
-        return ResponseEntity.ok(paymentService.initializePayment(request.getAmount(),userEmail,request.getDescription()));
+        return ResponseEntity.ok(paymentService.newRentalPayment(userEmail, request));
+    }
+    @PostMapping("/renew")
+    public ResponseEntity<PayStackResponse> renewRent( @Valid @RequestBody RenewRentalPaymentRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        String userEmail = customUserDetails.getUsername();
+
+        return ResponseEntity.ok(paymentService.renewRentalPayment(userEmail, request));
+    }
+
+    @GetMapping("/transactions")
+    ResponseEntity<List<TransactionResponse>> getUserTransactions() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        String userUuid = customUserDetails.getUuid();
+        return ResponseEntity.ok(transactionService.getTransactionsForUser(userUuid));
+
     }
 
     @PostMapping("/webhook")

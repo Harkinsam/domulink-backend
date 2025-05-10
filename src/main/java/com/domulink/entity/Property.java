@@ -33,7 +33,7 @@ public class Property {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String uuid;
 
     @ManyToOne(fetch = FetchType.LAZY)

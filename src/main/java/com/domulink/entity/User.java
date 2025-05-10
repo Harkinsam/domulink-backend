@@ -76,9 +76,6 @@ public class User {
 	@Column(name = "employment_status")
 	private EmploymentStatus employmentStatus;
 
-	@Min(value = 0, message = "Monthly income cannot be negative")
-	@Column(name = "monthly_income")
-	private Integer monthlyIncome;
 
 //	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 //	@JoinColumn(name = "landlord_id") // Foreign key in Property table
